@@ -1,0 +1,161 @@
+﻿<#@ template language="C#" debug="true" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Serialization" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ assembly name="EnvDTE" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Net.Http" #>
+<#@ import namespace="System.Runtime.InteropServices.ComTypes" #>
+<#@ import namespace="System.Security" #>
+<#@ import namespace="System.Xml.Serialization" #>
+<#@ import namespace="Microsoft.CSharp" #>
+<#@ import namespace="Swagger2WebApiClient.Infrastructure" #>
+<#@ import namespace="Swagger2WebApiClient.Models" #>
+<#@ import namespace="WebApiClient" #>
+<#@ import namespace="WebApiClient.Attributes" #>
+<#@ output extension=".cs" #>
+<#  
+	var swaggerParser=new SwaggerParser(); 
+#>
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Linq;
+using Newtonsoft.Json;
+using Swagger2WebApiClient.Infrastructure;
+using Swagger2WebApiClient.Models;
+using <#= Config.Namespace#>.Models;
+using <#= Config.Namespace#>.Api;
+using WebApiClient;
+using WebApiClient.Attributes;
+#region Models
+namespace <#= Config.Namespace#>.Models
+{
+<#
+	var classDefinitions=ProxyDefinition.ClassDefinitions;
+	foreach(var classDef in classDefinitions)
+	{
+		List<EnumDefinition> modelEnums = new List<EnumDefinition>();
+#>
+	/// <summary>
+	/// 
+	/// </summary>
+	public class <#= classDef.Name #>  <#=string.IsNullOrEmpty(classDef.Inherits) ? string.Empty : string.Format(": {0}", classDef.Inherits)  #>
+	{
+		<# 
+		foreach(var prop in classDef.Properties) {
+		#>
+
+		public <#=prop.TypeName #> <#=prop.Name  #> { get; set; }
+		<# 
+				if (prop.EnumValues != null)
+				{
+				    modelEnums.Add(new EnumDefinition()
+				    {
+				        Name = prop.TypeName,
+						Values = prop.EnumValues
+				    });
+				}
+		#>
+		<#}#>
+
+		<# foreach(var modelEnum in modelEnums)
+		 {
+		var csharpCodeProvider = new CSharpCodeProvider();
+		#>
+		public enum <#=csharpCodeProvider.CreateValidIdentifier(modelEnum.Name) #>
+		{
+			<# foreach(var value in modelEnum.Values.Distinct()){ #>
+			<#= swaggerParser.FixTypeName(value) #>,
+			<# } #>
+		}
+		<#
+		 }
+		#>
+  }
+<# 		
+    }
+#>
+
+}
+
+#endregion
+
+#region ApiClient
+namespace <#= Config.Namespace#>.Api{
+
+<#  
+	var proxies = ProxyDefinition.Operations.Select(i=>i.ProxyName).Distinct();
+	foreach (var proxy in proxies)
+	{
+#>
+	/// <summary>
+	/// Web Api Client For <#=swaggerParser.FixTypeName(proxy) #>
+	/// </summary>
+	[HttpHost("<#=Config.ServiceHost  #>")] 
+	public interface I<#=swaggerParser.FixTypeName(proxy)  #>WebApi : IHttpApi
+	{
+	<#
+	List<EnumDefinition> proxyParamEnums = new List<EnumDefinition>();
+	foreach (var operationDef in ProxyDefinition.Operations.Where(i=>i.ProxyName.Equals(proxy)))
+	{ 
+		string returnType = string.IsNullOrEmpty(operationDef.ReturnType) ? "void" : string.Format("ITask<{0}>", operationDef.ReturnType);
+					var enums = operationDef.Parameters.Where(i => i.Type.EnumValues != null);
+				    if (enums != null)
+				    {
+				        foreach (var enumParam in enums)
+				        {
+				            enumParam.Type.TypeName = operationDef.OperationId + enumParam.Type.Name;
+				            proxyParamEnums.Add(new EnumDefinition()
+				            {
+								Name = enumParam.Type.TypeName,
+								Values = enumParam.Type.EnumValues
+				            });
+				        }
+				    }
+		operationDef.Parameters=operationDef.Parameters.OrderByDescending(i=>i.IsRequired).ToList();
+		string parameters = string.Join(", ", operationDef.Parameters.Select(
+										x => (x.IsRequired == false) ? string.Format("{0} {1} {2} = {3}",swaggerParser.GetParameterType(x), swaggerParser.GetDefaultType(x), x.Type.GetCleanName(), swaggerParser.GetDefaultValue(x)) 
+										 :  string.Format("{0} {1} {2}",swaggerParser.GetParameterType(x),swaggerParser.GetDefaultType(x), x.Type.GetCleanName())));
+		var methodShow=string.Empty;
+		switch (operationDef.Method.ToUpperInvariant())
+		{
+			case "GET":
+				methodShow="Get";
+				break;
+			case "POST":
+				methodShow="Post";
+				break;
+			case "DELETE":
+				methodShow="Delete";
+				break;
+			case "PUT":
+				methodShow="Put";
+				break;
+			default:
+				break;
+        }
+
+	#>
+	/// <summary>
+    /// <#=operationDef.Description ?? ""  #>
+    /// </summary>
+	<# foreach (var p in operationDef.Parameters) { #>
+    /// <param name="<#= p.Type.GetCleanName() #>"><#=p.Description ?? ""  #></param>
+	<# }#>
+    /// <returns></returns>
+	[Http<#= methodShow  #>("<#=operationDef.Path  #>")]
+	<#= returnType #>  <#=operationDef.OperationId #>Async (<#= parameters #>);
+
+	<# } #>
+	}
+<# } #>
+
+}
+#endregion
+
