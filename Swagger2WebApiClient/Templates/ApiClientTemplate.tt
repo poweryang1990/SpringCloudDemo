@@ -74,10 +74,8 @@ namespace <#= Config.Namespace#>.Models
 			<#= swaggerParser.FixTypeName(value) #>,
 			<# } #>
 		}
-		<#
-		 }
-		#>
-  }
+		<# }#>
+    }
 <# 		
     }
 #>
@@ -120,8 +118,8 @@ namespace <#= Config.Namespace#>.Api{
 				    }
 		operationDef.Parameters=operationDef.Parameters.OrderByDescending(i=>i.IsRequired).ToList();
 		string parameters = string.Join(", ", operationDef.Parameters.Select(
-										x => (x.IsRequired == false) ? string.Format("{0} {1} {2} = {3}",swaggerParser.GetParameterType(x), swaggerParser.GetDefaultType(x), x.Type.GetCleanName(), swaggerParser.GetDefaultValue(x)) 
-										 :  string.Format("{0} {1} {2}",swaggerParser.GetParameterType(x),swaggerParser.GetDefaultType(x), x.Type.GetCleanName())));
+										x => (x.IsRequired == false) ? string.Format("{0}{1} {2} = {3}",swaggerParser.GetParameterType(x), swaggerParser.GetDefaultType(x), x.Type.GetCleanName(), swaggerParser.GetDefaultValue(x)) 
+										 :  string.Format("{0}{1} {2}",swaggerParser.GetParameterType(x),swaggerParser.GetDefaultType(x), x.Type.GetCleanName())));
 		var methodShow=string.Empty;
 		switch (operationDef.Method.ToUpperInvariant())
 		{
@@ -150,10 +148,10 @@ namespace <#= Config.Namespace#>.Api{
 	<# }#>
     /// <returns></returns>
 	[Http<#= methodShow  #>("<#=operationDef.Path  #>")]
-	<#= returnType #>  <#=operationDef.OperationId #>Async (<#= parameters #>);
+	<#= returnType #>  <#=operationDef.OperationId #>Async(<#= parameters #>);
 
 	<# } #>
-	}
+}
 <# } #>
 
 }

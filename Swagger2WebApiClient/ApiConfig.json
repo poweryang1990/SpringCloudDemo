@@ -1,0 +1,8 @@
+﻿{
+  "Name": "Demo",
+  "Namespace": "UOKO.Demo",
+  "ServiceHost": "http://localhost:5000",
+  "SwaggerDocEndpoint": "http://localhost:5000/swagger/docs/v1",
+  "ServiceName": "Demo-Api",
+  "ServiceDiscoveryEndpoint": "http://localhost:8500"
+}

@@ -182,15 +182,13 @@ namespace Swagger2WebApiClient.Templates
             this.Write("\t\t}\r\n\t\t");
             
             #line 77 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
-
-		 }
-		
+ }
             
             #line default
             #line hidden
-            this.Write("  }\r\n");
+            this.Write("    }\r\n");
             
-            #line 81 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 79 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
  		
     }
 
@@ -199,14 +197,14 @@ namespace Swagger2WebApiClient.Templates
             #line hidden
             this.Write("\r\n}\r\n\r\n#endregion\r\n\r\n#region ApiClient\r\nnamespace ");
             
-            #line 90 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 88 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.Namespace));
             
             #line default
             #line hidden
             this.Write(".Api{\r\n\r\n");
             
-            #line 92 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 90 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
   
 	var proxies = ProxyDefinition.Operations.Select(i=>i.ProxyName).Distinct();
 	foreach (var proxy in proxies)
@@ -217,28 +215,28 @@ namespace Swagger2WebApiClient.Templates
             #line hidden
             this.Write("\t/// <summary>\r\n\t/// Web Api Client For ");
             
-            #line 98 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 96 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(swaggerParser.FixTypeName(proxy)));
             
             #line default
             #line hidden
             this.Write("\r\n\t/// </summary>\r\n\t[HttpHost(\"");
             
-            #line 100 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 98 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ServiceHost));
             
             #line default
             #line hidden
             this.Write("\")] \r\n\tpublic interface I");
             
-            #line 101 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 99 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(swaggerParser.FixTypeName(proxy)));
             
             #line default
             #line hidden
             this.Write("WebApi : IHttpApi\r\n\t{\r\n\t");
             
-            #line 103 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 101 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
 
 	List<EnumDefinition> proxyParamEnums = new List<EnumDefinition>();
 	foreach (var operationDef in ProxyDefinition.Operations.Where(i=>i.ProxyName.Equals(proxy)))
@@ -259,8 +257,8 @@ namespace Swagger2WebApiClient.Templates
 				    }
 		operationDef.Parameters=operationDef.Parameters.OrderByDescending(i=>i.IsRequired).ToList();
 		string parameters = string.Join(", ", operationDef.Parameters.Select(
-										x => (x.IsRequired == false) ? string.Format("{0} {1} {2} = {3}",swaggerParser.GetParameterType(x), swaggerParser.GetDefaultType(x), x.Type.GetCleanName(), swaggerParser.GetDefaultValue(x)) 
-										 :  string.Format("{0} {1} {2}",swaggerParser.GetParameterType(x),swaggerParser.GetDefaultType(x), x.Type.GetCleanName())));
+										x => (x.IsRequired == false) ? string.Format("{0}{1} {2} = {3}",swaggerParser.GetParameterType(x), swaggerParser.GetDefaultType(x), x.Type.GetCleanName(), swaggerParser.GetDefaultValue(x)) 
+										 :  string.Format("{0}{1} {2}",swaggerParser.GetParameterType(x),swaggerParser.GetDefaultType(x), x.Type.GetCleanName())));
 		var methodShow=string.Empty;
 		switch (operationDef.Method.ToUpperInvariant())
 		{
@@ -286,84 +284,84 @@ namespace Swagger2WebApiClient.Templates
             #line hidden
             this.Write("\t/// <summary>\r\n    /// ");
             
-            #line 146 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 144 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(operationDef.Description ?? ""));
             
             #line default
             #line hidden
             this.Write("\r\n    /// </summary>\r\n\t");
             
-            #line 148 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 146 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
  foreach (var p in operationDef.Parameters) { 
             
             #line default
             #line hidden
             this.Write("    /// <param name=\"");
             
-            #line 149 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 147 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.Type.GetCleanName()));
             
             #line default
             #line hidden
             this.Write("\">");
             
-            #line 149 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 147 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.Description ?? ""));
             
             #line default
             #line hidden
             this.Write("</param>\r\n\t");
             
-            #line 150 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 148 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
  }
             
             #line default
             #line hidden
             this.Write("    /// <returns></returns>\r\n\t[Http");
             
-            #line 152 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 150 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodShow));
             
             #line default
             #line hidden
             this.Write("(\"");
             
-            #line 152 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 150 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(operationDef.Path));
             
             #line default
             #line hidden
             this.Write("\")]\r\n\t");
             
-            #line 153 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 151 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnType));
             
             #line default
             #line hidden
             this.Write("  ");
             
-            #line 153 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 151 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(operationDef.OperationId));
             
             #line default
             #line hidden
-            this.Write("Async (");
+            this.Write("Async(");
             
-            #line 153 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 151 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameters));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n\t");
             
-            #line 155 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 153 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t}\r\n");
+            this.Write("}\r\n");
             
-            #line 157 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
+            #line 155 "E:\MyWorkSpace\SpringCloudDemo\Swagger2WebApiClient\Templates\ApiClientTemplate.tt"
  } 
             
             #line default

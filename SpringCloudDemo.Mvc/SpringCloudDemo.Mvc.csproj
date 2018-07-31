@@ -190,6 +190,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebApiClient.JIT, Version=0.1.5.0, Culture=neutral, PublicKeyToken=96ac13f3a45093d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApiClient.JIT.0.1.5\lib\net45\WebApiClient.JIT.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -242,6 +245,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApiClient\DemoApiClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -283,6 +287,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="WebApiClient\ApiConfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -309,6 +314,10 @@
     <ProjectReference Include="..\SpringCloudDemo.Common\SpringCloudDemo.Common.csproj">
       <Project>{b835feaa-eae7-49bb-905c-351e4b5ad4f1}</Project>
       <Name>SpringCloudDemo.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Swagger2WebApiClient\Swagger2WebApiClient.csproj">
+      <Project>{c8ad7f63-fab1-4317-ba13-922f701629d9}</Project>
+      <Name>Swagger2WebApiClient</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

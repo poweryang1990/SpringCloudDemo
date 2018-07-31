@@ -15,15 +15,16 @@ namespace Swagger2WebApiClient.Test
 
             var apiConfig = new ApiConfig()
             {
+                Name = "Demo",
                 Namespace = "UOKO.Demo",
                 SwaggerDocEndpoint = "http://localhost:5000/swagger/docs/v1",
                 ServiceHost = "http://localhost:5000",
-                ServiceName = "Demo",
+                ServiceName = "Demo-Api",
                 ServiceDiscoveryEndpoint = "http://localhost:8500"
             };
             var genetator=new ApiClientGenetator(apiConfig);
             var  result=genetator.Generate();
-            var csFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, apiConfig.ServiceName+"WebApi") + ".cs";
+            var csFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, apiConfig.Name+"WebApi") + ".cs";
             File.WriteAllText(csFilePath, result);
         }
     }

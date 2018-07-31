@@ -10,7 +10,6 @@ using UOKO.Demo.Models;
 using UOKO.Demo.Api;
 using WebApiClient;
 using WebApiClient.Attributes;
-
 #region Models
 namespace UOKO.Demo.Models
 {
@@ -26,7 +25,7 @@ namespace UOKO.Demo.Models
 				
 		public string LoginProvider { get; set; }
 				
-	}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -41,7 +40,7 @@ namespace UOKO.Demo.Models
 				
 		public List<ExternalLoginViewModel> ExternalLoginProviders { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -52,7 +51,7 @@ namespace UOKO.Demo.Models
 				
 		public string ProviderKey { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -65,7 +64,7 @@ namespace UOKO.Demo.Models
 				
 		public string State { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -78,7 +77,7 @@ namespace UOKO.Demo.Models
 				
 		public string ConfirmPassword { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -89,7 +88,7 @@ namespace UOKO.Demo.Models
 				
 		public string ConfirmPassword { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -98,7 +97,7 @@ namespace UOKO.Demo.Models
 		
 		public string ExternalAccessToken { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -109,7 +108,7 @@ namespace UOKO.Demo.Models
 				
 		public string ProviderKey { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -122,7 +121,7 @@ namespace UOKO.Demo.Models
 				
 		public string ConfirmPassword { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -131,7 +130,7 @@ namespace UOKO.Demo.Models
 		
 		public string Email { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -146,7 +145,7 @@ namespace UOKO.Demo.Models
 				
 		public Address Address { get; set; }
 				
-			}
+		    }
 	/// <summary>
 	/// 
 	/// </summary>
@@ -155,7 +154,7 @@ namespace UOKO.Demo.Models
 		
 		public string Province { get; set; }
 				
-			}
+		    }
 
 }
 
@@ -175,14 +174,14 @@ namespace UOKO.Demo.Api{
     /// </summary>
 	    /// <returns></returns>
 	[HttpGet("/api/Account/UserInfo")]
-	ITask<UserInfoViewModel>  GetUserInfoAsync ();
+	ITask<UserInfoViewModel>  GetUserInfoAsync();
 
 		/// <summary>
     /// 
     /// </summary>
 	    /// <returns></returns>
 	[HttpPost("/api/Account/Logout")]
-	ITask  LogoutAsync ();
+	void  LogoutAsync();
 
 		/// <summary>
     /// 
@@ -191,7 +190,7 @@ namespace UOKO.Demo.Api{
 	    /// <param name="generateState"></param>
 	    /// <returns></returns>
 	[HttpGet("/api/Account/ManageInfo")]
-	ITask<ManageInfoViewModel>  GetManageInfoAsync ( string returnUrl,  bool? generateState = null);
+	ITask<ManageInfoViewModel>  GetManageInfoAsync(string returnUrl, bool? generateState = null);
 
 		/// <summary>
     /// 
@@ -199,7 +198,7 @@ namespace UOKO.Demo.Api{
 	    /// <param name="model"></param>
 	    /// <returns></returns>
 	[HttpPost("/api/Account/ChangePassword")]
-	ITask  ChangePasswordAsync ([FormContent] ChangePasswordBindingModel model);
+	void  ChangePasswordAsync([FormContent] ChangePasswordBindingModel model);
 
 		/// <summary>
     /// 
@@ -207,7 +206,7 @@ namespace UOKO.Demo.Api{
 	    /// <param name="model"></param>
 	    /// <returns></returns>
 	[HttpPost("/api/Account/SetPassword")]
-	ITask  SetPasswordAsync ([FormContent] SetPasswordBindingModel model);
+	void  SetPasswordAsync([FormContent] SetPasswordBindingModel model);
 
 		/// <summary>
     /// 
@@ -215,7 +214,7 @@ namespace UOKO.Demo.Api{
 	    /// <param name="model"></param>
 	    /// <returns></returns>
 	[HttpPost("/api/Account/AddExternalLogin")]
-	ITask  AddExternalLoginAsync ([FormContent] AddExternalLoginBindingModel model);
+	void  AddExternalLoginAsync([FormContent] AddExternalLoginBindingModel model);
 
 		/// <summary>
     /// 
@@ -223,7 +222,7 @@ namespace UOKO.Demo.Api{
 	    /// <param name="model"></param>
 	    /// <returns></returns>
 	[HttpPost("/api/Account/RemoveLogin")]
-	ITask  RemoveLoginAsync ([FormContent] RemoveLoginBindingModel model);
+	void  RemoveLoginAsync([FormContent] RemoveLoginBindingModel model);
 
 		/// <summary>
     /// 
@@ -232,7 +231,7 @@ namespace UOKO.Demo.Api{
 	    /// <param name="error"></param>
 	    /// <returns></returns>
 	[HttpGet("/api/Account/ExternalLogin")]
-	ITask  GetExternalLoginAsync ( string provider,  string error = null);
+	void  GetExternalLoginAsync(string provider, string error = null);
 
 		/// <summary>
     /// 
@@ -241,7 +240,7 @@ namespace UOKO.Demo.Api{
 	    /// <param name="generateState"></param>
 	    /// <returns></returns>
 	[HttpGet("/api/Account/ExternalLogins")]
-	ITask<List<ExternalLoginViewModel>>  GetExternalLoginsAsync ( string returnUrl,  bool? generateState = null);
+	ITask<List<ExternalLoginViewModel>>  GetExternalLoginsAsync(string returnUrl, bool? generateState = null);
 
 		/// <summary>
     /// 
@@ -249,7 +248,7 @@ namespace UOKO.Demo.Api{
 	    /// <param name="model"></param>
 	    /// <returns></returns>
 	[HttpPost("/api/Account/Register")]
-	ITask  RegisterAsync ([FormContent] RegisterBindingModel model);
+	void  RegisterAsync([FormContent] RegisterBindingModel model);
 
 		/// <summary>
     /// 
@@ -257,9 +256,9 @@ namespace UOKO.Demo.Api{
 	    /// <param name="model"></param>
 	    /// <returns></returns>
 	[HttpPost("/api/Account/RegisterExternal")]
-	ITask  RegisterExternalAsync ([FormContent] RegisterExternalBindingModel model);
+	void  RegisterExternalAsync([FormContent] RegisterExternalBindingModel model);
 
-		}
+	}
 	/// <summary>
 	/// Web Api Client For User
 	/// </summary>
@@ -271,17 +270,17 @@ namespace UOKO.Demo.Api{
     /// </summary>
 	    /// <returns></returns>
 	[HttpGet("/api/user")]
-	ITask<List<User>>  GetAllAsync ();
+	ITask<List<User>>  GetAllAsync();
 
-	/// <summary>
+		/// <summary>
     /// 
     /// </summary>
-	/// <param name="id"></param>
-	/// <returns></returns>
+	    /// <param name="id"></param>
+	    /// <returns></returns>
 	[HttpGet("/api/user/{id}")]
-	ITask<User>  GetAsync (int? id);
+	ITask<User>  GetAsync(int? id);
 
-		}
+	}
 
 }
 #endregion
