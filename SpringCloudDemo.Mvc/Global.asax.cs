@@ -17,7 +17,7 @@ namespace SpringCloudDemo.Mvc
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
+            ApplicationConfig.RegisterConfig("dev");
             new IocConfig().Init();
         }
     }

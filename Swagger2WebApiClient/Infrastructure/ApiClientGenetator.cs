@@ -32,7 +32,7 @@ namespace Swagger2WebApiClient.Infrastructure
             using (var client = new HttpClient())
             {
 
-                var response = client.GetAsync(swaggerJsonUrl).Result;
+                var response = client.GetAsync(swaggerJsonUrl).ConfigureAwait(false).GetAwaiter().GetResult();
                 response.EnsureSuccessStatusCode();
                 var swaggerJson = response.Content.ReadAsStringAsync().Result;
                 var parser = new SwaggerParser();
