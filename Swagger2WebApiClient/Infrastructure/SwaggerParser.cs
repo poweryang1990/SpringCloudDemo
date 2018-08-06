@@ -421,11 +421,11 @@ namespace Swagger2WebApiClient.Infrastructure
             switch (x.ParameterIn)
             {
               case ParameterIn.Body:
-                  paramType = IsIntrinsicType(x.Type.TypeName) ? "[FormField] " : "[FormContent] ";
+                  paramType = IsIntrinsicType(x.Type.TypeName) ? "" : "[Body] ";
                 break;
 
               case ParameterIn.FormData:
-                  paramType = IsIntrinsicType(x.Type.TypeName) ? "[MulitpartText] " : "[MulitpartContent] ";
+                  paramType = IsIntrinsicType(x.Type.TypeName) ? "" : "[Body(BodySerializationMethod.UrlEncoded)] ";
                  break;
             }
             return paramType;

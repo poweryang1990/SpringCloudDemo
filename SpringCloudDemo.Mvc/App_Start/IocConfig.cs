@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
+using Refit;
 using SimpleInjector;
 using SimpleInjector.Advanced;
 using SimpleInjector.Integration.Web;
@@ -11,7 +12,6 @@ using SimpleInjector.Integration.Web.Mvc;
 using SpringCloudDemo.Common;
 using SpringCloudDemo.Common.Extensions;
 using UOKO.Demo.Api;
-using WebApiClient;
 
 namespace SpringCloudDemo.Mvc.App_Start
 {
@@ -51,7 +51,7 @@ namespace SpringCloudDemo.Mvc.App_Start
 
             //Eureka 服务注册发现 IOC注入
             container.RegisterDiscoveryClient(ApplicationConfig.Configuration);
-           container.Register(()=> HttpApiClient.Create<IUserWebApi>(),Lifestyle.Singleton);
+            container.Register(()=> RestService.For<IUserWebApi>("http://localhost:5000/"),Lifestyle.Scoped);
             _lazyGetModuleInitializers.Value.ToList().ForEach(x => x.LoadIoCSetting(container));
         }
 

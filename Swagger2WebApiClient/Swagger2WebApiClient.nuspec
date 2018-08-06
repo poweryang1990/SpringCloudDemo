@@ -4,7 +4,7 @@
     <id>Swagger2WebApiClient</id>
     <title>$title$</title>
     <projectUrl>https://github.com/poweryang1990/SpringCloudDemo</projectUrl>
-    <version>1.0.0.1</version>
+    <version>0.0.1.1</version>
     <authors>UOKO-JGO</authors>
     <owners>UOKO-JGO</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -13,20 +13,20 @@
     <copyright>$copyright$</copyright>
     <tags>Swagger WebApi Client CSharp</tags>
     <dependencies>
-      <dependency id="WebApiClient.JIT" version="0.1.5" /> 
+      <dependency id="Refit" version="4.1.17" /> 
     </dependencies>
   </metadata>
   <files>
     <file src="bin\$configuration$\Newtonsoft.Json.dll" target="lib\net45" />
     <file src="bin\$configuration$\System.Net.Http.Formatting.dll" target="lib\net45" />
-    <file src="bin\$configuration$\WebApiClient.JIT.dll" target="lib\net45" />
-    <file src="bin\$configuration$\WebApiClient.JIT.dll" target="build" />
+    <file src="bin\$configuration$\Refit.dll" target="lib\net45" />
+    <file src="bin\$configuration$\Refit.dll" target="build" />
     <file src="bin\$configuration$\*.targets" target="build" />
     <file src="bin\$configuration$\System.Net.Http.Formatting.dll" target="build" />
     <file src="bin\$configuration$\Newtonsoft.Json.dll" target="build" />
 
     <file src="bin\$configuration$\ApiConfig.json" target="content\WebApiClient" />
     <file src="bin\$configuration$\init.ps1" target="tools" />
-    <file src="bin\$configuration$\WebApiProxyCSharp.psm1" target="tools" />
+    <file src="bin\$configuration$\Swagger2WebApiClient.psm1" target="tools" />
   </files>
 </package>

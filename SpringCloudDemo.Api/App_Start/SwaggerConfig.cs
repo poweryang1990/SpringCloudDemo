@@ -3,6 +3,11 @@ using WebActivatorEx;
 using SpringCloudDemo.Api;
 using Swashbuckle.Application;
 using System.Linq;
+using Swashbuckle.Swagger;
+using System.Collections.Generic;
+using System;
+using System.Web.Http.Description;
+
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
 namespace SpringCloudDemo.Api
@@ -163,7 +168,7 @@ namespace SpringCloudDemo.Api
                         // the Swagger 2.0 spec. - https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md
                         // before using this option.
                         //
-                        //c.DocumentFilter<ApplyDocumentVendorExtensions>();
+                        c.DocumentFilter<ApplyDocumentVendorExtensions>();
 
                         // In contrast to WebApi, Swagger 2.0 does not include the query string component when mapping a URL
                         // to an action. As a result, Swashbuckle will raise an exception if it encounters multiple actions
@@ -250,6 +255,32 @@ namespace SpringCloudDemo.Api
                         //
                         //c.EnableApiKeySupport("apiKey", "header");
                     });
+        }
+
+        public class ApplyDocumentVendorExtensions : IDocumentFilter
+        {
+            public void Apply(SwaggerDocument swaggerDoc, SchemaRegistry schemaRegistry, IApiExplorer apiExplorer)
+            {
+                foreach (var schemaDictionaryItem in swaggerDoc.definitions)
+                {
+                    var schema = schemaDictionaryItem.Value;
+                    foreach (var propertyDictionaryItem in schema.properties)
+                    {
+                        var property = propertyDictionaryItem.Value;
+                        var propertyEnums = property.@enum;
+                        if (propertyEnums != null && propertyEnums.Count > 0)
+                        {
+                            var enumDescriptions = new List<string>();
+                            for (int i = 0; i < propertyEnums.Count; i++)
+                            {
+                                var enumOption = propertyEnums[i];
+                                enumDescriptions.Add(string.Format("{0} = {1} ", Enum.GetName(enumOption.GetType(), enumOption), (int)enumOption ));
+                            }
+                            property.description += string.Format(" ({0})", string.Join(", ", enumDescriptions.ToArray()));
+                        }
+                    }
+                }
+            }
         }
     }
 }

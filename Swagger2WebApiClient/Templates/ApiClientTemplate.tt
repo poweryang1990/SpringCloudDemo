@@ -15,8 +15,8 @@
 <#@ import namespace="Microsoft.CSharp" #>
 <#@ import namespace="Swagger2WebApiClient.Infrastructure" #>
 <#@ import namespace="Swagger2WebApiClient.Models" #>
-<#@ import namespace="WebApiClient" #>
-<#@ import namespace="WebApiClient.Attributes" #>
+<#@ import namespace="Refit" #>
+
 <#@ output extension=".cs" #>
 <#  
 	var swaggerParser=new SwaggerParser(); 
@@ -31,8 +31,7 @@ using Swagger2WebApiClient.Infrastructure;
 using Swagger2WebApiClient.Models;
 using <#= Config.Namespace#>.Models;
 using <#= Config.Namespace#>.Api;
-using WebApiClient;
-using WebApiClient.Attributes;
+using Refit;
 #region Models
 namespace <#= Config.Namespace#>.Models
 {
@@ -95,14 +94,13 @@ namespace <#= Config.Namespace#>.Api{
 	/// <summary>
 	/// Web Api Client For <#=swaggerParser.FixTypeName(proxy) #>
 	/// </summary>
-	[HttpHost("<#=Config.ServiceHost  #>")] 
-	public interface I<#=swaggerParser.FixTypeName(proxy)  #>WebApi : IHttpApi
+	public interface I<#=swaggerParser.FixTypeName(proxy)  #>WebApi
 	{
 	<#
 	List<EnumDefinition> proxyParamEnums = new List<EnumDefinition>();
 	foreach (var operationDef in ProxyDefinition.Operations.Where(i=>i.ProxyName.Equals(proxy)))
 	{ 
-		string returnType = string.IsNullOrEmpty(operationDef.ReturnType) ? "void" : string.Format("ITask<{0}>", operationDef.ReturnType);
+		string returnType = string.IsNullOrEmpty(operationDef.ReturnType) ? "Task" : string.Format("Task<{0}>", operationDef.ReturnType);
 					var enums = operationDef.Parameters.Where(i => i.Type.EnumValues != null);
 				    if (enums != null)
 				    {
@@ -147,7 +145,7 @@ namespace <#= Config.Namespace#>.Api{
     /// <param name="<#= p.Type.GetCleanName() #>"><#=p.Description ?? ""  #></param>
 	<# }#>
     /// <returns></returns>
-	[Http<#= methodShow  #>("<#=operationDef.Path  #>")]
+	[<#= methodShow  #>("<#=operationDef.Path  #>")]
 	<#= returnType #>  <#=operationDef.OperationId #>Async(<#= parameters #>);
 
 	<# } #>

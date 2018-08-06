@@ -5,22 +5,21 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using UOKO.Demo.Api;
-using WebApiClient;
 
 namespace SpringCloudDemo.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private  IUserWebApi _userWebApi;
+       private  IUserWebApi _userWebApi;
 
         public HomeController(IUserWebApi userWebApi)
         {
             _userWebApi = userWebApi;
         }
-        public  async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            _userWebApi = HttpApiClient.Create<IUserWebApi>();
-            var result= await _userWebApi.GetAllAsync();
+            
+            var result=  _userWebApi.GetAllAsync().Result;
             return View();
         }
 

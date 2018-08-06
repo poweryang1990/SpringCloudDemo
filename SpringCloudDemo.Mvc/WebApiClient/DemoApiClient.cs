@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -8,8 +9,7 @@ using Swagger2WebApiClient.Infrastructure;
 using Swagger2WebApiClient.Models;
 using UOKO.Demo.Models;
 using UOKO.Demo.Api;
-using WebApiClient;
-using WebApiClient.Attributes;
+using Refit;
 #region Models
 namespace UOKO.Demo.Models
 {
@@ -141,6 +141,8 @@ namespace UOKO.Demo.Models
 				
 		public string Name { get; set; }
 				
+		public int Gender { get; set; }
+				
 		public int Age { get; set; }
 				
 		public Address Address { get; set; }
@@ -166,22 +168,21 @@ namespace UOKO.Demo.Api{
 	/// <summary>
 	/// Web Api Client For Account
 	/// </summary>
-	[HttpHost("http://localhost:5000")] 
-	public interface IAccountWebApi : IHttpApi
+	public interface IAccountWebApi
 	{
 		/// <summary>
     /// 
     /// </summary>
 	    /// <returns></returns>
-	[HttpGet("/api/Account/UserInfo")]
-	ITask<UserInfoViewModel>  GetUserInfoAsync();
+	[Get("/api/Account/UserInfo")]
+	Task<UserInfoViewModel>  GetUserInfoAsync();
 
 		/// <summary>
     /// 
     /// </summary>
 	    /// <returns></returns>
-	[HttpPost("/api/Account/Logout")]
-	void  LogoutAsync();
+	[Post("/api/Account/Logout")]
+	Task  LogoutAsync();
 
 		/// <summary>
     /// 
@@ -189,40 +190,40 @@ namespace UOKO.Demo.Api{
 	    /// <param name="returnUrl"></param>
 	    /// <param name="generateState"></param>
 	    /// <returns></returns>
-	[HttpGet("/api/Account/ManageInfo")]
-	ITask<ManageInfoViewModel>  GetManageInfoAsync(string returnUrl, bool? generateState = null);
+	[Get("/api/Account/ManageInfo")]
+	Task<ManageInfoViewModel>  GetManageInfoAsync(string returnUrl, bool? generateState = null);
 
 		/// <summary>
     /// 
     /// </summary>
 	    /// <param name="model"></param>
 	    /// <returns></returns>
-	[HttpPost("/api/Account/ChangePassword")]
-	void  ChangePasswordAsync([FormContent] ChangePasswordBindingModel model);
+	[Post("/api/Account/ChangePassword")]
+	Task  ChangePasswordAsync([Body] ChangePasswordBindingModel model);
 
 		/// <summary>
     /// 
     /// </summary>
 	    /// <param name="model"></param>
 	    /// <returns></returns>
-	[HttpPost("/api/Account/SetPassword")]
-	void  SetPasswordAsync([FormContent] SetPasswordBindingModel model);
+	[Post("/api/Account/SetPassword")]
+	Task  SetPasswordAsync([Body] SetPasswordBindingModel model);
 
 		/// <summary>
     /// 
     /// </summary>
 	    /// <param name="model"></param>
 	    /// <returns></returns>
-	[HttpPost("/api/Account/AddExternalLogin")]
-	void  AddExternalLoginAsync([FormContent] AddExternalLoginBindingModel model);
+	[Post("/api/Account/AddExternalLogin")]
+	Task  AddExternalLoginAsync([Body] AddExternalLoginBindingModel model);
 
 		/// <summary>
     /// 
     /// </summary>
 	    /// <param name="model"></param>
 	    /// <returns></returns>
-	[HttpPost("/api/Account/RemoveLogin")]
-	void  RemoveLoginAsync([FormContent] RemoveLoginBindingModel model);
+	[Post("/api/Account/RemoveLogin")]
+	Task  RemoveLoginAsync([Body] RemoveLoginBindingModel model);
 
 		/// <summary>
     /// 
@@ -230,8 +231,8 @@ namespace UOKO.Demo.Api{
 	    /// <param name="provider"></param>
 	    /// <param name="error"></param>
 	    /// <returns></returns>
-	[HttpGet("/api/Account/ExternalLogin")]
-	void  GetExternalLoginAsync(string provider, string error = null);
+	[Get("/api/Account/ExternalLogin")]
+	Task  GetExternalLoginAsync(string provider, string error = null);
 
 		/// <summary>
     /// 
@@ -239,46 +240,45 @@ namespace UOKO.Demo.Api{
 	    /// <param name="returnUrl"></param>
 	    /// <param name="generateState"></param>
 	    /// <returns></returns>
-	[HttpGet("/api/Account/ExternalLogins")]
-	ITask<List<ExternalLoginViewModel>>  GetExternalLoginsAsync(string returnUrl, bool? generateState = null);
+	[Get("/api/Account/ExternalLogins")]
+	Task<List<ExternalLoginViewModel>>  GetExternalLoginsAsync(string returnUrl, bool? generateState = null);
 
 		/// <summary>
     /// 
     /// </summary>
 	    /// <param name="model"></param>
 	    /// <returns></returns>
-	[HttpPost("/api/Account/Register")]
-	void  RegisterAsync([FormContent] RegisterBindingModel model);
+	[Post("/api/Account/Register")]
+	Task  RegisterAsync([Body] RegisterBindingModel model);
 
 		/// <summary>
     /// 
     /// </summary>
 	    /// <param name="model"></param>
 	    /// <returns></returns>
-	[HttpPost("/api/Account/RegisterExternal")]
-	void  RegisterExternalAsync([FormContent] RegisterExternalBindingModel model);
+	[Post("/api/Account/RegisterExternal")]
+	Task  RegisterExternalAsync([Body] RegisterExternalBindingModel model);
 
 	}
 	/// <summary>
 	/// Web Api Client For User
 	/// </summary>
-	[HttpHost("http://localhost:5000")] 
-	public interface IUserWebApi : IHttpApi
+	public interface IUserWebApi
 	{
 		/// <summary>
     /// 
     /// </summary>
 	    /// <returns></returns>
-	[HttpGet("/api/user")]
-	ITask<List<User>>  GetAllAsync();
+	[Get("/api/user")]
+	Task<List<User>>  GetAllAsync();
 
 		/// <summary>
     /// 
     /// </summary>
 	    /// <param name="id"></param>
 	    /// <returns></returns>
-	[HttpGet("/api/user/{id}")]
-	ITask<User>  GetAsync(int? id);
+	[Get("/api/user/{id}")]
+	Task<User>  GetAsync(int? id);
 
 	}
 
