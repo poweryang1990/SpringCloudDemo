@@ -4,7 +4,7 @@
     <id>Swagger2WebApiClient</id>
     <title>$title$</title>
     <projectUrl>https://github.com/poweryang1990/SpringCloudDemo</projectUrl>
-    <version>0.0.1.1</version>
+    <version>$version$</version>
     <authors>UOKO-JGO</authors>
     <owners>UOKO-JGO</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

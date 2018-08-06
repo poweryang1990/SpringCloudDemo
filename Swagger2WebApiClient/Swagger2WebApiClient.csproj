@@ -82,16 +82,24 @@
     <Compile Include="Templates\ApiClientTemplate.Parameters.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ApiConfig.json" />
+    <None Include="ApiConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
-    <None Include="init.ps1" />
+    <None Include="init.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="ReadMe.md" />
-    <None Include="Swagger2WebApiClient.psm1" />
+    <None Include="Swagger2WebApiClient.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Swagger2WebApiClient.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Swagger2WebApiClient.targets" />
+    <None Include="Swagger2WebApiClient.targets">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\ApiClientTemplate.tt">
